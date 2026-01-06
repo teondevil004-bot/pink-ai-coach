@@ -1,65 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #050505; /* 極深黑 */
+  --foreground: #ffffff;
+  /* 定義粉色霓虹光 */
+  --neon-pink: #ff00ff;
+  --neon-glow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.4);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
-}
-
-@keyframes flow {
-  0%, 100% {
-    stroke-dasharray: 0 1000;
-    stroke-dashoffset: 0;
-    opacity: 0.3;
-  }
-  50% {
-    stroke-dasharray: 200 1000;
-    stroke-dashoffset: -200;
-    opacity: 0.8;
-  }
-}
-
-@keyframes flowVertical {
-  0%, 100% {
-    stroke-dasharray: 0 1000;
-    stroke-dashoffset: 0;
-    opacity: 0.3;
-  }
-  50% {
-    stroke-dasharray: 150 1000;
-    stroke-dashoffset: -150;
-    opacity: 0.7;
-  }
+/* 玻璃擬態樣式 */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
