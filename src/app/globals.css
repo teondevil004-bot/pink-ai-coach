@@ -1,43 +1,104 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030712; 
+  /* 1. 基底色改為更深邃的宇宙藍黑漸層 */
+  --background-start: #020617;
+  --background-end: #0b0f2a;
   --foreground: #ffffff;
   --neon-pink: #ec4899;
-  --neon-cyan: #06b6d4;
+  --neon-cyan: #22d3ee;
 }
 
 body {
-  background: var(--background);
+  /* 使用放射狀漸層製造宇宙深處的感覺 */
+  background: radial-gradient(ellipse at bottom, var(--background-end) 0%, var(--background-start) 100%);
   color: var(--foreground);
   overflow-x: hidden;
-  /* 磨砂底紋 */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* 保留您喜歡的磨砂顆粒感 (作為最上層覆蓋) */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1; /* 確保在背景之上，內容之下 */
+  pointer-events: none;
+  opacity: 0.05; /* 調整顆粒強度 */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-  backdrop-filter: blur(25px) saturate(160%);
-  -webkit-backdrop-filter: blur(25px) saturate(160%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
 }
 
-/* 懸浮粒子動畫 */
-@keyframes float {
-  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-  50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+/* ====================
+   宇宙元素定義區
+   ==================== */
+
+/* 星星閃爍動畫 */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+/* 星雲緩慢漂浮旋轉動畫 */
+@keyframes nebula-drift {
+  0% { transform: rotate(0deg) scale(1) translate(0, 0); filter: hue-rotate(0deg); }
+  33% { transform: rotate(120deg) scale(1.1) translate(20px, -20px); }
+  66% { filter: hue-rotate(45deg); }
+  100% { transform: rotate(360deg) scale(1) translate(0, 0); filter: hue-rotate(0deg); }
 }
 
-@keyframes neon-pulse {
-  0%, 100% { box-shadow: 0 0 15px rgba(236, 72, 153, 0.4); }
-  50% { box-shadow: 0 0 30px rgba(236, 72, 153, 0.7); }
+/* 星星層級：利用 box-shadow 製造大量星星點 */
+.stars-base {
+  position: absolute;
+  width: 1px; height: 1px; background: transparent;
 }
 
-.animate-neon-pulse { animation: neon-pulse 3s infinite; }
-.animate-spin-slow { animation: spin-slow 20s linear infinite; }
+/* 小型遙遠星星 (數量最多) */
+.stars-small {
+  box-shadow: 10vw 10vh #fff, 30vw 40vh #fff, 80vw 10vh #fff, 50vw 80vh #fff, 15vw 60vh #fff, 90vw 90vh #fff,
+              40vw 20vh #fff, 70vw 50vh #fff, 20vw 90vh #fff, 60vw 30vh #fff, 5vw 50vh #fff, 95vw 20vh #fff,
+              25vw 15vh #fff, 75vw 75vh #fff, 35vw 55vh #fff, 85vw 35vh #fff, 45vw 45vh #fff, 55vw 95vh #fff,
+              12vw 28vh #fff, 38vw 62vh #fff, 68vw 18vh #fff, 82vw 88vh #fff, 92vw 42vh #fff, 22vw 72vh #fff,
+              4vw 8vh #fff, 18vw 98vh #fff, 48vw 12vh #fff, 58vw 82vh #fff, 72vw 8vh #fff, 88vw 68vh #fff,
+              28vw 32vh #fff, 62vw 58vh #fff, 14vw 44vh #fff, 98vw 14vh #fff, 32vw 92vh #fff, 52vw 22vh #fff;
+  opacity: 0.4;
+}
+
+/* 中型星星 (帶有閃爍) */
+.stars-medium {
+  width: 2px; height: 2px;
+  box-shadow: 20vw 30vh #eef, 60vw 70vh #eef, 40vw 50vh #eef, 80vw 20vh #eef, 10vw 80vh #eef, 90vw 40vh #eef,
+              35vw 15vh #eef, 75vw 85vh #eef, 15vw 45vh #eef, 55vw 65vh #eef, 25vw 95vh #eef, 65vw 25vh #eef;
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+
+/* 大型近景星星 (較亮) */
+.stars-large {
+  width: 3px; height: 3px;
+  box-shadow: 15vw 25vh #ccd, 75vw 65vh #ccd, 45vw 85vh #ccd;
+  filter: blur(1px);
+  animation: twinkle 7s ease-in-out infinite alternate-reverse;
+}
+
+/* 星雲類別 */
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  animation: nebula-drift 40s linear infinite;
+  mix-blend-mode: screen; /* 讓色彩疊加更像光暈 */
+}
+
+.animate-neon { animation: neon-glow 4s infinite; }
+@keyframes neon-glow {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.4)); }
+  50% { filter: drop-shadow(0 0 25px rgba(236, 72, 153, 0.8)); }
+}
 @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: spin-slow 20s linear infinite; }
