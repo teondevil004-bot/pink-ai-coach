@@ -1,48 +1,61 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505; /* 稍微亮一點點的深黑，減少死黑感 */
+  /* 修改：不再是死黑，而是帶有深藍紫調的極夜色 */
+  --background: #030712; 
   --foreground: #ffffff;
-  --neon-pink: #ec4899; /* 稍微柔和一點的粉 */
-  --neon-cyan: #06b6d4; /* 新增：青色，用來平衡視覺 */
+  --neon-pink: #ec4899;
+  --neon-cyan: #06b6d4;
+  --neon-purple: #8b5cf6;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
+  /* 新增：全域噪點紋理，增加磨砂紙般的觸感 */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
 }
 
-/* 升級版玻璃擬態：加入細微的深色漸層底，提升文字閱讀性 */
+/* 終極版玻璃擬態 */
 .glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  backdrop-filter: blur(25px) saturate(150%); /* 更強的模糊 */
-  -webkit-backdrop-filter: blur(25px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.08); /* 更細緻的邊框 */
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
+  /* 背景稍微調亮一點點，讓透光感更好 */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  /* 提高模糊度，讓背景花紋變成漂亮的散景 */
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  /* 邊框更細緻 */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  border: 1px solid rgba(236, 72, 153, 0.3); /* 滑過時微粉光 */
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(236, 72, 153, 0.1);
+  border: 1px solid rgba(236, 72, 153, 0.4);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(236, 72, 153, 0.2);
 }
 
-/* 更優雅的呼吸燈動畫 */
+/* 動畫定義區 */
 @keyframes neon-pulse {
   0%, 100% { box-shadow: 0 0 10px rgba(236, 72, 153, 0.5); }
-  50% { box-shadow: 0 0 25px rgba(236, 72, 153, 0.8); }
+  50% { box-shadow: 0 0 25px rgba(236, 72, 153, 0.8), 0 0 50px rgba(236, 72, 153, 0.3); }
 }
-
-/* 新增：青藍色呼吸燈 */
 @keyframes cyan-pulse {
   0%, 100% { box-shadow: 0 0 10px rgba(6, 182, 212, 0.5); }
-  50% { box-shadow: 0 0 25px rgba(6, 182, 212, 0.8); }
+  50% { box-shadow: 0 0 25px rgba(6, 182, 212, 0.8), 0 0 50px rgba(6, 182, 212, 0.3); }
+}
+/* 新增：背景流動動畫 */
+@keyframes background-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .animate-neon-pulse { animation: neon-pulse 3s ease-in-out infinite; }
 .animate-cyan-pulse { animation: cyan-pulse 3s ease-in-out infinite; }
-
-@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.animate-spin-slow { animation: spin-slow 20s linear infinite; }
+/* 讓背景花紋緩慢移動 */
+.animate-bg-flow {
+  background-size: 200% 200%;
+  animation: background-flow 20s ease infinite;
+}
