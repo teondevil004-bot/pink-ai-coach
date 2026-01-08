@@ -77,6 +77,12 @@ export default function Home() {
             <p className="text-lg sm:text-2xl text-slate-300 mb-12 sm:mb-16 max-w-3xl mx-auto glass-card p-6 sm:p-8 rounded-3xl border-none">
               現場帶你掌握剪輯工作和運用 AI 協助，從文案創作到影片剪輯，一個人也能打造屬於自已的風格影片。
             </p>
+            <div className="flex justify-center my-8">
+              <img src="/580646.jpg" alt="AI 短影音工作坊" style={{ width: '300px' }} className="rounded-lg shadow-lg" />
+            </div>
+            <div className="flex justify-center my-8">
+              <img src="/580646.jpg" alt="AI 短影音工作坊" style={{ width: '300px' }} className="rounded-lg shadow-lg" />
+            </div>
             <button onClick={scrollToForm} className="px-10 py-5 sm:px-20 sm:py-8 bg-gradient-to-r from-cyan-600 to-fuchsia-600 text-white font-bold text-xl sm:text-3xl rounded-full animate-neon shadow-lg hover:scale-105 transition-transform">
               立即開啟創作之路
             </button>
