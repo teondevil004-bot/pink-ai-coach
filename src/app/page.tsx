@@ -77,6 +77,15 @@ export default function Home() {
             <p className="text-lg sm:text-2xl text-slate-300 mb-12 sm:mb-16 max-w-3xl mx-auto glass-card p-6 sm:p-8 rounded-3xl border-none">
               現場帶你掌握剪輯工作和運用 AI 協助，從文案創作到影片剪輯，一個人也能打造屬於自已的風格影片。
             </p>
+            {/* 📸 宣傳照區域 */}
+            <div className="flex justify-center my-10 relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+              <img 
+                src="/580646.jpg" 
+                alt="小朱教練 AI 短影音工作坊" 
+                className="relative rounded-2xl shadow-2xl border border-white/10 w-[300px] h-auto object-cover transform transition duration-500 hover:scale-[1.02]" 
+              />
+            </div>
             <button onClick={scrollToForm} className="px-10 py-5 sm:px-20 sm:py-8 bg-gradient-to-r from-cyan-600 to-fuchsia-600 text-white font-bold text-xl sm:text-3xl rounded-full animate-neon shadow-lg hover:scale-105 transition-transform">
               立即開啟創作之路
             </button>
